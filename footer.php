@@ -18,22 +18,5 @@
 
 <?php wp_footer(); ?>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const menuButton = document.querySelector('.mobile-menu-toggle');
-    const navMenu = document.querySelector('.main-nav');
-    if (menuButton && navMenu) {
-        menuButton.addEventListener('click', function() {
-            const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
-            menuButton.setAttribute('aria-expanded', !isExpanded);
-            if (navMenu.style.display === 'block') {
-                navMenu.style.display = 'none';
-            } else {
-                navMenu.style.display = 'block';
-            }
-        });
-    }
-});
-<\/script>
 </body>
 </html>
