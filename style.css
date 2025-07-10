@@ -1,0 +1,135 @@
+/*
+Theme Name: Cyber-Tech Theme
+Theme URI: https://your-domain.com/
+Author: Your Name
+Author URI: https://your-domain.com/
+Description: قالب مدونة تقنية متخصص في الأمن السيبراني والذكاء الاصطناعي، مصمم للأداء العالي وتجربة المستخدم الممتازة.
+Version: 1.5.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Tags: blog, dark-theme, responsive-layout, accessibility-ready, customizer
+Text Domain: cybertech
+*/
+
+/* =================================================================== */
+/* 1. Global Styles & Variables */
+/* =================================================================== */
+:root { --background-color: #0a0a0a; --surface-color: #1a1a1a; --primary-text-color: #e0e0e0; --secondary-text-color: #a0a0a0; --accent-color: #00ffff; --accent-hover-color: #00cccc; --border-color: #333333; --code-bg-color: #0d1117; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'IBM Plex Sans Arabic', sans-serif; background-color: var(--background-color); color: var(--primary-text-color); line-height: 1.8; font-weight: 400; }
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 2px solid var(--accent-color); outline-offset: 3px; box-shadow: 0 0 0 5px rgba(0, 255, 255, 0.3); border-radius: 3px; }
+h1, h2, h3, h4, h5, h6 { font-weight: 700; line-height: 1.4; margin-bottom: 1rem; color: #ffffff; }
+h1 { font-size: clamp(2.5rem, 5vw, 3.5rem); }
+h2 { font-size: clamp(2rem, 4vw, 2.5rem); }
+h3 { font-size: clamp(1.25rem, 3vw, 1.5rem); }
+p { margin-bottom: 1.5rem; color: var(--primary-text-color); }
+a { color: var(--accent-color); text-decoration: none; transition: color 0.3s ease; }
+a:hover { color: var(--accent-hover-color); }
+.container { width: 90%; max-width: 1200px; margin: 0 auto; padding: 4rem 0; }
+.section-title { text-align: center; margin-bottom: 3rem; position: relative; }
+.section-title::after { content: ''; display: block; width: 60px; height: 3px; background-color: var(--accent-color); margin: 0.75rem auto 0 auto; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0; }
+
+/* =================================================================== */
+/* 2. Header, Footer & Navigation */
+/* =================================================================== */
+.main-header { background-color: rgba(10, 10, 10, 0.8); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); padding: 1rem 0; position: sticky; top: 0; z-index: 1000; }
+.main-header .container-header { display: flex; justify-content: space-between; align-items: center; width: 90%; max-width: 1200px; margin: 0 auto; }
+.logo { font-size: 1.5rem; font-weight: 700; color: #ffffff; text-decoration: none; }
+.main-nav ul { display: flex; list-style: none; gap: 2rem; margin: 0; padding: 0; }
+.main-nav a { font-weight: 500; color: var(--primary-text-color); text-decoration: none; }
+.mobile-menu-toggle { display: none; background: none; border: none; color: var(--primary-text-color); cursor: pointer; }
+.main-footer { border-top: 1px solid var(--border-color); text-align: center; padding: 2rem 0; margin-top: 4rem; }
+.main-footer .container { padding: 0; }
+.social-links { margin-bottom: 1rem; }
+.social-links a { margin: 0 0.75rem; font-size: 1.5rem; text-decoration: none; }
+
+/* =================================================================== */
+/* 3. Homepage Styles (index.php) */
+/* =================================================================== */
+.hero-section { background-color: var(--surface-color); padding: 6rem 0; text-align: center; }
+.hero-container { max-width: 800px; padding: 0; }
+.hero-title { color: #ffffff; }
+.hero-subtitle { color: var(--secondary-text-color); font-size: 1.1rem; margin-top: 1rem; margin-bottom: 2.5rem; }
+.search-form { position: relative; max-width: 600px; margin: 0 auto; }
+.search-field { width: 100%; padding: 1rem 1.5rem; padding-left: 3.5rem; font-size: 1rem; border-radius: 50px; border: 1px solid var(--border-color); background-color: var(--background-color); color: var(--primary-text-color); transition: border-color 0.3s, box-shadow 0.3s; }
+.search-field:focus { border-color: var(--accent-color); box-shadow: 0 0 0 4px rgba(0, 255, 255, 0.2); }
+.search-submit { position: absolute; left: 0.5rem; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--secondary-text-color); cursor: pointer; padding: 0.5rem; }
+.featured-post-section { padding: 4rem 0; }
+.featured-post-card { display: grid; grid-template-columns: 1fr; gap: 2rem; align-items: center; background-color: var(--surface-color); border-radius: 12px; overflow: hidden; }
+.featured-post-thumbnail img { width: 100%; height: 100%; object-fit: cover; }
+.featured-post-content { padding: 2rem; }
+.featured-tag { display: inline-block; background-color: var(--accent-color); color: #000; padding: 0.25rem 0.75rem; border-radius: 6px; font-size: 0.8rem; font-weight: 700; margin-bottom: 1rem; }
+.featured-post-content h2 a { color: #ffffff; text-decoration: none; }
+.cta-button { display: inline-block; background-color: var(--accent-color); color: #000000; padding: 0.8rem 2rem; border-radius: 50px; font-weight: 700; transition: transform 0.3s ease, background-color 0.3s ease; }
+.cta-button:hover { background-color: var(--accent-hover-color); transform: translateY(-3px); }
+.articles-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+.article-card { background-color: var(--surface-color); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+.article-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); }
+.article-card-thumbnail a { display: block; width: 100%; height: 200px; }
+.article-card-thumbnail img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.article-content { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; }
+.article-category a { display: inline-block; background-color: rgba(0, 255, 255, 0.1); color: var(--accent-color); padding: 0.25rem 1rem; border-radius: 50px; font-size: 0.9rem; font-weight: 500; margin-bottom: 1rem; text-decoration: none; }
+.article-content h3 { margin-top: 0; flex-grow: 1; }
+.article-content h3 a { color: #ffffff; text-decoration: none; }
+.article-content h3 a:hover { color: var(--accent-color); }
+.article-meta { font-size: 0.875rem; color: var(--secondary-text-color); margin-top: 1.5rem; }
+.popular-articles-section { background-color: var(--surface-color); padding: 4rem 0; }
+.cta-section { padding: 4rem 0; background-color: var(--surface-color); text-align: center; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
+.cta-container { max-width: 600px; padding: 0; }
+.cta-title { color: #ffffff; }
+.subscribe-form { display: flex; gap: 0.5rem; margin-top: 2rem; }
+.subscribe-form input { flex-grow: 1; padding: 0.8rem 1rem; border: 1px solid var(--border-color); border-radius: 6px; background: var(--background-color); color: var(--primary-text-color); }
+.subscribe-form button { background-color: var(--accent-color); color: #000; border: none; padding: 0.8rem 1.5rem; border-radius: 6px; font-weight: 700; cursor: pointer; transition: background-color 0.3s ease; }
+.subscribe-form button:hover { background-color: var(--accent-hover-color); }
+.pagination { margin-top: 4rem; display: flex; justify-content: center; align-items: center; }
+.pagination .nav-links { display: flex; gap: 0.5rem; list-style: none; padding: 0; }
+.pagination .page-numbers { display: block; padding: 0.75rem 1.25rem; border: 1px solid var(--border-color); border-radius: 8px; color: var(--primary-text-color); text-decoration: none; transition: background-color 0.3s, border-color 0.3s; }
+.pagination .page-numbers:hover { background-color: var(--surface-color); border-color: var(--accent-color); }
+.pagination .page-numbers.current { background-color: var(--accent-color); color: var(--background-color); border-color: var(--accent-color); font-weight: 700; }
+.pagination .dots { padding: 0.75rem 0; }
+
+/* =================================================================== */
+/* 4. Single Post Styles (single.php) */
+/* =================================================================== */
+.article-container { width: 90%; max-width: 720px; margin: 0 auto; padding: 3rem 0; }
+.article-header { text-align: center; margin-bottom: 3rem; border-bottom: 1px solid var(--border-color); padding-bottom: 2rem; }
+.featured-image { width: 100%; height: auto; max-height: 400px; object-fit: cover; border-radius: 12px; margin-bottom: 3rem; }
+.entry-content img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 8px; margin-bottom: 1.5rem; }
+.entry-content a { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.author-link { display: inline-block; color: var(--primary-text-color); background-color: var(--surface-color); padding: 0.1rem 0.6rem; border-radius: 6px; text-decoration: none; border: 1px solid var(--border-color); transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; font-weight: 500; margin: 0 0.25rem; }
+.author-link:hover { background-color: var(--accent-color); color: var(--background-color); border-color: var(--accent-color); }
+.breadcrumbs { margin-bottom: 1.5rem; }
+.breadcrumbs ol { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.5rem; font-size: 0.9rem; color: var(--secondary-text-color); }
+.breadcrumbs li:not(:last-child)::after { content: '>'; margin-right: 0.5rem; color: var(--secondary-text-color); }
+.breadcrumbs a { color: var(--secondary-text-color); text-decoration: none; }
+.breadcrumbs a:hover { color: var(--accent-color); }
+.breadcrumbs [aria-current="page"] { color: var(--primary-text-color); font-weight: 500; }
+.entry-content blockquote { margin: 2rem 0; padding: 1.5rem; padding-right: 2rem; border-right: 4px solid var(--accent-color); background-color: var(--surface-color); border-radius: 0 8px 8px 0; font-size: 1.2rem; font-style: italic; color: #ffffff; }
+.entry-content blockquote p { margin-bottom: 0; }
+.entry-content pre { background-color: var(--code-bg-color); color: #c9d1d9; padding: 1.5rem; border-radius: 8px; overflow-x: auto; font-family: 'monospace'; font-size: 0.95rem; }
+.related-posts { margin-top: 4rem; padding-top: 3rem; border-top: 1px solid var(--border-color); }
+.related-posts h2 { text-align: center; margin-bottom: 2rem; }
+.related-posts-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+.related-post-card { background-color: var(--surface-color); border-radius: 8px; padding: 1.5rem; border: 1px solid var(--border-color); transition: border-color 0.3s ease; }
+.related-post-card:hover { border-color: var(--accent-color); }
+.related-post-card h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+.related-post-card h3 a { color: #ffffff; text-decoration: none; }
+.related-post-card p { font-size: 0.9rem; color: var(--secondary-text-color); margin-bottom: 0; }
+
+/* =================================================================== */
+/* 5. Responsive Design */
+/* =================================================================== */
+@media (min-width: 768px) {
+    .articles-grid { grid-template-columns: repeat(2, 1fr); }
+    .featured-post-card { grid-template-columns: 1fr 1fr; }
+    .related-posts-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1024px) {
+    .articles-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 767px) {
+    .main-nav { display: none; }
+    .mobile-menu-toggle { display: block; }
+}
