@@ -5,7 +5,7 @@
  */
 
 if ( ! defined( '_S_VERSION' ) ) {
-	define( '_S_VERSION', '1.5.0' );
+	define( '_S_VERSION', '1.6.0' );
 }
 
 function cybertech_setup() {
@@ -20,10 +20,36 @@ add_action( 'after_setup_theme', 'cybertech_setup' );
 function cybertech_scripts() {
     wp_enqueue_style( 'google-fonts', 'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;700&display=swap', array(), null );
 	wp_enqueue_style( 'cybertech-style', get_stylesheet_uri(), array(), _S_VERSION );
+	
+	// Add theme JavaScript for enhanced functionality
+	wp_enqueue_script( 'cybertech-main', get_template_directory_uri() . '/assets/js/main.js', array(), _S_VERSION, true );
 }
 add_action( 'wp_enqueue_scripts', 'cybertech_scripts' );
 
 require get_template_directory() . '/inc/customizer.php';
+
+// Performance optimizations
+function cybertech_performance_optimizations() {
+    // Remove unnecessary WordPress features
+    remove_action('wp_head', 'wp_generator');
+    remove_action('wp_head', 'wlwmanifest_link');
+    remove_action('wp_head', 'rsd_link');
+    remove_action('wp_head', 'wp_shortlink_wp_head', 10, 0);
+    
+    // Disable emoji scripts
+    remove_action('wp_head', 'print_emoji_detection_script', 7);
+    remove_action('wp_print_styles', 'print_emoji_styles');
+    
+    // Remove query strings from static resources
+    add_filter('script_loader_src', 'cybertech_remove_query_strings', 15, 1);
+    add_filter('style_loader_src', 'cybertech_remove_query_strings', 15, 1);
+}
+add_action('init', 'cybertech_performance_optimizations');
+
+function cybertech_remove_query_strings($src) {
+    $parts = explode('?ver', $src);
+    return $parts[0];
+}
 
 function cybertech_the_breadcrumbs() {
     if ( ! is_single() ) return;
@@ -113,3 +139,46 @@ function cybertech_pagination() {
         echo '</nav>';
     }
 }
+
+// Image lazy loading
+function cybertech_add_lazy_loading($content) {
+    if (is_admin() || is_feed() || is_preview()) {
+        return $content;
+    }
+    
+    $content = preg_replace('/<img(.*?)src=/i', '<img$1loading="lazy" src=', $content);
+    return $content;
+}
+add_filter('the_content', 'cybertech_add_lazy_loading');
+
+// Custom widget areas
+function cybertech_widgets_init() {
+    register_sidebar(array(
+        'name'          => __('Sidebar الشريط الجانبي', 'cybertech'),
+        'id'            => 'sidebar-1',
+        'description'   => __('الشريط الجانبي الرئيسي للموقع', 'cybertech'),
+        'before_widget' => '<section id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</section>',
+        'before_title'  => '<h3 class="widget-title">',
+        'after_title'   => '</h3>',
+    ));
+    
+    register_sidebar(array(
+        'name'          => __('Footer Area منطقة التذييل', 'cybertech'),
+        'id'            => 'footer-1',
+        'description'   => __('منطقة التذييل للويدجت', 'cybertech'),
+        'before_widget' => '<div id="%1$s" class="footer-widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h4 class="footer-widget-title">',
+        'after_title'   => '</h4>',
+    ));
+}
+add_action('widgets_init', 'cybertech_widgets_init');
+
+// Enhanced security headers
+function cybertech_security_headers() {
+    header('X-Content-Type-Options: nosniff');
+    header('X-Frame-Options: SAMEORIGIN');
+    header('X-XSS-Protection: 1; mode=block');
+}
+add_action('send_headers', 'cybertech_security_headers');
